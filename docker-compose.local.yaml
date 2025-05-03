@@ -1,0 +1,30 @@
+volumes:
+  local_postgres_data: {}
+  local_postgres_data_backups: {}
+
+services:
+  django:
+    build:
+      context: .
+      dockerfile: ./compose/local/django/Dockerfile
+    image: django-cython/django:0.1.0-dev
+    volumes:
+      - .:/app:z
+    ports:
+      - 8000:8000
+    depends_on:
+      - postgres
+    env_file:
+      - ./.envs/.local/.postgres
+    command: /start
+
+  postgres:
+    build:
+      context: .
+      dockerfile: ./compose/production/postgres/Dockerfile
+    image: django-cython/postgres:0.1.0-dev
+    volumes:
+      - local_postgres_data:/var/lib/postgresql/data
+      - local_postgres_data_backups:/backups
+    env_file:
+      - ./.envs/.local/.postgres
