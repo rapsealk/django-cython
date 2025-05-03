@@ -1,0 +1,47 @@
+[project]
+name = "django-cython"
+requires-python = ">=3.13, <4"
+dependencies = [
+    "django==5.2",  # https://github.com/django/django
+]
+readme = "README.md"
+dynamic = ["version"]
+
+[tool.setuptools.dynamic]
+version = { file = "VERSION" }
+
+[tool.ruff]
+target-version = "py313"
+extend-exclude = [
+    "*/migrations/*.py",
+    "staticfiles/*",
+]
+line-length = 119
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.ruff.lint]
+select = [
+  "F",
+  "E",
+  "W",
+  "I",
+]
+ignore = [
+  "S101", # Use of assert detected https://docs.astral.sh/ruff/rules/assert/
+  "RUF012", # Mutable class attributes should be annotated with `typing.ClassVar`
+  "SIM102", # sometimes it's better to nest
+  "UP038", # Checks for uses of isinstance/issubclass that take a tuple
+          # of types for comparison.
+          # Deactivated because it can make the code slow:
+          # https://github.com/astral-sh/ruff/issues/7871
+]
+# The fixes in extend-unsafe-fixes will require
+# provide the `--unsafe-fixes` flag when fixing.
+extend-unsafe-fixes = [
+  "UP038",
+]
+
+[tool.ruff.lint.isort]
+force-single-line = true

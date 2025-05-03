@@ -1,0 +1,4 @@
+# Code quality
+# ------------------------------------------------------------------------------
+pre-commit==4.2.0  # https://github.com/pre-commit/pre-commit
+ruff==0.11.8  # https://github.com/astral-sh/ruff
