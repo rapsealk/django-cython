@@ -4,7 +4,7 @@ FROM python:${PYTHON_VERSION} AS python
 
 FROM python AS python-build-stage
 
-ARG BUILD_ENVIRONMENT=production
+ARG BUILD_ENVIRONMENT=local
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
   # dependencies for building Python packages
@@ -19,7 +19,7 @@ RUN pip wheel --wheel-dir /usr/src/app/wheels \
 
 FROM python AS python-run-stage
 
-ARG BUILD_ENVIRONMENT=production
+ARG BUILD_ENVIRONMENT=local
 ARG APP_HOME=/app
 
 ENV PYTHONUNBUFFERED=1
@@ -39,6 +39,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 
 COPY --from=python-build-stage /usr/src/app/wheels /wheels/
 
+# use wheels to install python dependencies
 RUN pip install --no-cache-dir --no-index --find-links=/wheels/ /wheels/* \
   && rm -rf /wheels/
 
@@ -46,7 +47,7 @@ COPY ./compose/production/django/entrypoint /entrypoint
 RUN sed -i 's/\r$//g' /entrypoint
 RUN chmod +x /entrypoint
 
-COPY --chown=django:django ./compose/production/django/start /start
+COPY ./compose/local/django/start /start
 RUN sed -i 's/\r$//g' /start
 RUN chmod +x /start
 
