@@ -2,6 +2,7 @@
 # ------------------------------------------------------------------------------
 django==5.2  # https://github.com/django/django
 django-environ==0.12.0  # https://github.com/joke2k/django-environ
+djangorestframework==3.16.0  # https://github.com/encode/django-rest-framework
 
 psycopg[c]==3.2.7  # https://github.com/psycopg/psycopg
 uvicorn[standard]==0.34.2  # https://github.com/encode/uvicorn
