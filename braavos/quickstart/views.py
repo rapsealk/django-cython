@@ -3,6 +3,9 @@ from rest_framework import permissions, viewsets
 from rest_framework.request import Request
 from rest_framework.response import Response
 
+# from .bin.example_cython import primes as primes_func
+# from .bin.hello import hello as primes_func
+from braavos.quickstart.bin.example_cython import primes as primes_func
 from braavos.quickstart.serializers import GroupSerializer, UserSerializer
 
 
@@ -38,7 +41,8 @@ class PrimeNumberViewSet(viewsets.ViewSet):
         Return a list of prime numbers.
         """
         n = int(request.query_params.get("n", 0))
-        primes = self._get_primse(n)
+        # primes = self._get_primse(n)
+        primes = primes_func(n)
         return Response(primes)
 
     def _get_primse(self, n: int) -> "list[int]":
