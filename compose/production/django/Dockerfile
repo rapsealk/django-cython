@@ -51,5 +51,6 @@ RUN sed -i 's/\r$//g' /start
 RUN chmod +x /start
 
 COPY . ${APP_HOME}
+RUN rm ${APP_HOME}/tutorial/quickstart/bin/*.pyx ${APP_HOME}/tutorial/quickstart/bin/*.c
 
 ENTRYPOINT ["/entrypoint"]

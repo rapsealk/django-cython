@@ -3,13 +3,8 @@ from rest_framework import permissions, viewsets
 from rest_framework.request import Request
 from rest_framework.response import Response
 
-from .bin.example_cython import primes as primes_func
+from .bin.example_cython import get_users, primes
 from .serializers import GroupSerializer, UserSerializer
-
-# from .bin.example_cython import primes as primes_func
-# from .bin.hello import hello as primes_func
-# from tutorial.quickstart.bin.example_cython import primes as primes_func
-# from tutorial.quickstart.serializers import GroupSerializer, UserSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -44,21 +39,12 @@ class PrimeNumberViewSet(viewsets.ViewSet):
         Return a list of prime numbers.
         """
         n = int(request.query_params.get("n", 0))
-        # primes = self._get_primse(n)
-        primes = primes_func(n)
-        return Response(primes)
-
-    def _get_primse(self, n: int) -> "list[int]":
-        """
-        Return a list of prime numbers.
-        """
-        result = []
-        for i in range(2, n):
-            is_prime = True
-            for j in range(2, i):
-                if i % j == 0:
-                    is_prime = False
-                    break
-            if is_prime:
-                result.append(i)
-        return result
+        result = primes(n)
+        groups = [{"id": group.id, "name": group.name} for group in Group.objects.all()]
+        users = get_users()
+        users = [
+            {"id": user.id, "username": user.username, "email": user.email}
+            # for user in User.objects.all()
+            for user in users
+        ]
+        return Response({"result": result, "groups": groups, "users": users})

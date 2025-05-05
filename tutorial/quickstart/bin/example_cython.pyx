@@ -1,3 +1,6 @@
+from django.contrib.auth.models import User
+
+
 def primes(int n) -> list[int]:
     cdef int i, j
     result = []
@@ -9,3 +12,8 @@ def primes(int n) -> list[int]:
         else:
             result.append(i)
     return result
+
+
+def get_users():
+    users = User.objects.all()
+    return users
