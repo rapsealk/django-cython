@@ -21,7 +21,7 @@ RUN pip install \
   -r build.txt
 
 COPY ./Makefile ./setup.py .
-COPY ./braavos/quickstart/bin/example_cython.pyx ./braavos/quickstart/bin/example_cython.pyx
+COPY ./tutorial/quickstart/bin/example_cython.pyx ./tutorial/quickstart/bin/example_cython.pyx
 
 RUN make compile
 
@@ -61,7 +61,7 @@ COPY ./compose/local/django/start /start
 RUN sed -i 's/\r$//g' /start
 RUN chmod +x /start
 
-COPY --from=python-build-stage ./braavos/quickstart/bin/example_cython.cpython-*.so ${APP_HOME}/quickstart/bin/
+COPY --from=python-build-stage ./tutorial/quickstart/bin/example_cython.cpython-*.so ${APP_HOME}/quickstart/bin/
 
 COPY . ${APP_HOME}
 

@@ -7,14 +7,11 @@ dependencies = [
 readme = "README.md"
 dynamic = ["version"]
 
-# [tool.setuptools]
-# py-modules = ["braavos"]
-
 [tool.setuptools]
-package-dir = { "" = "braavos" }
+package-dir = { "" = "tutorial" }
 
 [tool.setuptools.packages.find]
-where = ["braavos"]
+where = ["tutorial"]
 
 [tool.setuptools.dynamic]
 version = { file = "VERSION" }

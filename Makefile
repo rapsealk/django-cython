@@ -3,5 +3,5 @@ compile:
 	# example_cython.cpython-313-aarch64-linux-gnu.so
 
 clean:
-	rm ./braavos/**/*.so
-	rm ./braavos/**/*.c
+	rm ./tutorial/**/*.so
+	rm ./tutorial/**/*.c

@@ -3,10 +3,13 @@ from rest_framework import permissions, viewsets
 from rest_framework.request import Request
 from rest_framework.response import Response
 
+from .bin.example_cython import primes as primes_func
+from .serializers import GroupSerializer, UserSerializer
+
 # from .bin.example_cython import primes as primes_func
 # from .bin.hello import hello as primes_func
-from braavos.quickstart.bin.example_cython import primes as primes_func
-from braavos.quickstart.serializers import GroupSerializer, UserSerializer
+# from tutorial.quickstart.bin.example_cython import primes as primes_func
+# from tutorial.quickstart.serializers import GroupSerializer, UserSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
