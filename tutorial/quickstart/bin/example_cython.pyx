@@ -1,11 +1,9 @@
 from django.contrib.auth.models import User
 
 
-def primes(int n) -> list[int]:
-    cdef int i, j
+def primes(n: int) -> list[int]:
     result = []
     for i in range(2, n):
-        is_prime = True
         for j in range(2, i):
             if i % j == 0:
                 break
