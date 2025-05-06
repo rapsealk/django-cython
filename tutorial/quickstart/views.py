@@ -3,7 +3,7 @@ from rest_framework import permissions, viewsets
 from rest_framework.request import Request
 from rest_framework.response import Response
 
-from .bin.example_cython import get_users, primes
+from .bin.example_cython import get_users, primes, raise_exception
 from .serializers import GroupSerializer, UserSerializer
 
 
@@ -41,10 +41,33 @@ class PrimeNumberViewSet(viewsets.ViewSet):
         n = int(request.query_params.get("n", 0))
         result = primes(n)
         groups = [{"id": group.id, "name": group.name} for group in Group.objects.all()]
-        users = get_users()
-        users = [
-            {"id": user.id, "username": user.username, "email": user.email}
-            # for user in User.objects.all()
-            for user in users
-        ]
+        users = [{"id": user.id, "username": user.username, "email": user.email} for user in get_users()]
         return Response({"result": result, "groups": groups, "users": users})
+
+
+class CythonExceptionViewSet(viewsets.ViewSet):
+    """
+    API endpoint that raises an exception.
+    """
+
+    permission_classes = [permissions.AllowAny]
+
+    def list(self, request: Request) -> Response:
+        """
+        Raise an exception.
+        """
+        raise_exception()
+
+
+class PythonExceptionViewSet(viewsets.ViewSet):
+    """
+    API endpoint that raises an exception.
+    """
+
+    permission_classes = [permissions.AllowAny]
+
+    def list(self, request: Request) -> Response:
+        """
+        Raise an exception.
+        """
+        raise Exception("This is an exception")

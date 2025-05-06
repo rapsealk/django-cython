@@ -7,8 +7,18 @@ dependencies = [
 readme = "README.md"
 dynamic = ["version"]
 
+# [build-system]
+# requires = [
+#   "setuptools==80.2.0",  # https://github.com/pypa/setuptools
+#   "Cython==3.0.12",  # https://github.com/cython/cython
+# ]
+# build-backend = "setuptools.build_meta"
+
 [tool.setuptools]
-package-dir = { "" = "tutorial" }
+package-dir = { "" = "." }
+# ext-modules = [
+#   {name = "example_cython", sources = ["tutorial/quickstart/bin/example_cython.pyx"]}
+# ]
 
 [tool.setuptools.packages.find]
 where = ["tutorial"]

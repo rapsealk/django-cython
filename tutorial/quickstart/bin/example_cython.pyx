@@ -15,3 +15,7 @@ def primes(n: int) -> list[int]:
 def get_users():
     users = User.objects.all()
     return users
+
+
+def raise_exception() -> None:
+    raise Exception("This is an exception")

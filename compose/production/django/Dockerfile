@@ -17,6 +17,14 @@ COPY ./requirements .
 RUN pip wheel --wheel-dir /usr/src/app/wheels \
   -r ${BUILD_ENVIRONMENT}.txt
 
+# RUN pip install \
+#   -r build.txt
+
+# COPY ./Makefile ./setup.py .
+# COPY ./tutorial/quickstart/bin/*.pyx ./tutorial/quickstart/bin/
+
+# RUN make compile
+
 FROM python AS python-run-stage
 
 ARG BUILD_ENVIRONMENT=production
@@ -29,6 +37,8 @@ ENV BUILD_ENV=${BUILD_ENVIRONMENT}
 WORKDIR ${APP_HOME}
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
+  # dependencies for building Python packages
+  build-essential \
   # psycopg dependencies
   libpq-dev \
   # entrypoint
@@ -51,6 +61,7 @@ RUN sed -i 's/\r$//g' /start
 RUN chmod +x /start
 
 COPY . ${APP_HOME}
-RUN rm ${APP_HOME}/tutorial/quickstart/bin/*.pyx ${APP_HOME}/tutorial/quickstart/bin/*.c
+
+RUN pip install -r ./requirements/build.txt && make compile
 
 ENTRYPOINT ["/entrypoint"]

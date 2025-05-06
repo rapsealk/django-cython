@@ -61,8 +61,8 @@ COPY ./compose/local/django/start /start
 RUN sed -i 's/\r$//g' /start
 RUN chmod +x /start
 
-COPY --from=python-build-stage ./tutorial/quickstart/bin/example_cython.cpython-*.so ${APP_HOME}/quickstart/bin/
-
 COPY . ${APP_HOME}
+
+COPY --from=python-build-stage ./tutorial/quickstart/bin/example_cython.cpython-*.so ${APP_HOME}/quickstart/bin/
 
 ENTRYPOINT ["/entrypoint"]
