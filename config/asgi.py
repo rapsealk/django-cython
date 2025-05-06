@@ -1,5 +1,5 @@
 """
-ASGI config for braavos project.
+ASGI config for tutorial project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 

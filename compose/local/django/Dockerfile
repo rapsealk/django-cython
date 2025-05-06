@@ -17,6 +17,14 @@ COPY ./requirements .
 RUN pip wheel --wheel-dir /usr/src/app/wheels \
   -r ${BUILD_ENVIRONMENT}.txt
 
+RUN pip install \
+  -r build.txt
+
+COPY ./Makefile ./setup.py .
+COPY ./tutorial/quickstart/bin/example_cython.pyx ./tutorial/quickstart/bin/example_cython.pyx
+
+RUN make compile
+
 FROM python AS python-run-stage
 
 ARG BUILD_ENVIRONMENT=local
@@ -29,6 +37,8 @@ ENV BUILD_ENV=${BUILD_ENVIRONMENT}
 WORKDIR ${APP_HOME}
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
+  # dependencies for building Python packages
+  build-essential \
   # psycopg dependencies
   libpq-dev \
   # entrypoint
@@ -52,5 +62,7 @@ RUN sed -i 's/\r$//g' /start
 RUN chmod +x /start
 
 COPY . ${APP_HOME}
+
+COPY --from=python-build-stage ./tutorial/quickstart/bin/example_cython.cpython-*.so ${APP_HOME}/quickstart/bin/
 
 ENTRYPOINT ["/entrypoint"]

@@ -1,3 +1,12 @@
 venv
 *.pyc
 *.sqlite3
+
+# Python build artifacts
+dist/
+*.egg-info/
+
+# Cython artifacts
+build/
+*.c
+*.so
